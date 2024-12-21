@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Siena Men's Basketball Holiday Album</title>
+
+  <!-- IN-PAGE CSS -->
+  <style>
+    /* =========================
+       Siena Palette
+    ========================= */
+    :root {
+      --siena-green: #006b54; /* Primary */
+      --siena-gold: #fcc917;  /* Secondary */
+      --siena-white: #ffffff;
+    }
+
+    /* =========================
+       Global Styles
+    ========================= */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--siena-white);
+      color: var(--siena-green);
+    }
+
+    header {
+      background-color: var(--siena-green);
+      color: var(--siena-white);
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.2rem;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* =========================
+       Album Cover
+    ========================= */
+    .album-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .album-cover {
+      max-width: 300px;
+      width: 100%;
+      border: 4px solid var(--siena-green);
+      border-radius: 10px;
+    }
+
+    /* =========================
+       Audio Playlist - Single Player
+    ========================= */
+    .audio-playlist {
+      margin-bottom: 2rem;
+    }
+
+    .audio-playlist h2 {
+      font-size: 1.8rem;
+      color: var(--siena-green);
+      margin-bottom: 1rem;
+    }
+
+    .audio-player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: var(--siena-gold);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .audio-player audio {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 0.5rem;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .player-controls button {
+      background-color: var(--siena-green);
+      color: var(--siena-white);
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    .player-controls button:hover {
+      opacity: 0.8;
+    }
+
+    #currentTrackTitle {
+      font-weight: bold;
+      color: var(--siena-green);
+    }
+
+    /* =========================
+       Promo Video (Responsive Embed)
+    ========================= */
+    .promo-video {
+      margin-bottom: 2rem;
+    }
+
+    .promo-video h2 {
+      color: var(--siena-green);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    /* Optional: Make the iframe responsive */
+    .video-responsive {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+    }
+    .video-responsive iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* =========================
+       Footer
+    ========================= */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--siena-green);
+      color: var(--siena-white);
+    }
+
+    footer a {
+      color: var(--siena-white);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ========== HEADER ========== -->
+  <header>
+    <h1>Siena Men's Basketball Presents: A Holiday Mix!</h1>
+    <p>A festive album straight from the court to your home.</p>
+  </header>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- ALBUM COVER SECTION -->
+    <section class="album-section">
+      <!-- Place your album cover .png or .jpg in assets/images/ -->
+      <img src="assets/images/album-cover.png" alt="Album Cover" class="album-cover" />
+    </section>
+
+    <!-- AUDIO PLAYER with SINGLE ELEMENT -->
+    <section class="audio-playlist">
+      <h2>Listen to Our Holiday Tracks</h2>
+      <div class="audio-player">
+        <!-- Audio element -->
+        <audio id="audioPlayer" controls preload="metadata">
+          Your browser does not support the audio element.
+        </audio>
+
+        <!-- Controls -->
+        <div class="player-controls">
+          <button id="prevTrack">Prev</button>
+          <span id="currentTrackTitle"></span>
+          <button id="nextTrack">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMO VIDEO (YOUTUBE EMBED) -->
+    <section class="promo-video">
+      <h2>As Seen on TV (Old-School Style!)</h2>
+      <div class="video-responsive">
+        <iframe 
+          src="https://www.youtube.com/embed/vFWu8yr1Ipo"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p style="text-align:center;">
+        Check out this classic infomercial throwback!
+      </p>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p>
+      &copy; <span id="year"></span> Siena Men’s Basketball |
+      <a href="https://siena.edu" target="_blank" rel="noopener noreferrer">Siena College</a>
+    </p>
+  </footer>
+
+  <!-- ========== IN-PAGE SCRIPT ========== -->
+  <script>
+    // ====================
+    // Current Year in Footer
+    // ====================
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ====================
+    // Audio Playlist
+    // ====================
+    // 1. Define your playlist
+    const playlist = [
+      {
+        title: "All I Want for Christmas",
+        src: "assets/audio/track1.mp3"
+      },
+      {
+        title: "Last Christmas",
+        src: "assets/audio/track2.mp3"
+      },
+      {
+        title: "Baby It's Cold Outside",
+        src: "assets/audio/track3.mp3"
+      },
+      {
+        title: "White Christmas",
+        src: "assets/audio/track4.mp3"
+      },
+      {
+        title: "12 Days of G-Mac Christmas",
+        src: "assets/audio/track5.mp3"
+      }
+    ];
+
+    // 2. Grab references to DOM elements
+    const audioPlayer = document.getElementById('audioPlayer');
+    const currentTrackTitle = document.getElementById('currentTrackTitle');
+    const prevTrackBtn = document.getElementById('prevTrack');
+    const nextTrackBtn = document.getElementById('nextTrack');
+
+    // 3. Track index
+    let currentTrackIndex = 0;
+
+    // 4. Load initial track
+    function loadTrack(index) {
+      audioPlayer.src = playlist[index].src;
+      currentTrackTitle.textContent = playlist[index].title;
+      audioPlayer.play();
+    }
+
+    loadTrack(currentTrackIndex);
+
+    // 5. Next/Prev controls
+    prevTrackBtn.addEventListener('click', () => {
+      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+      loadTrack(currentTrackIndex);
+    });
+
+    nextTrackBtn.addEventListener('click', () => {
+      currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+      loadTrack(currentTrackIndex);
+    });
+  </script>
+</body>
+</html>
