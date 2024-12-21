@@ -1,94 +1,366 @@
-/* Siena Palette */
+/* =========================
+   1) Host the Noteworthy font locally
+========================= */
+@font-face {
+  font-family: "Noteworthy";
+  /* Adjust path if your Noteworthy.ttc is elsewhere. 
+     Here we assume: fonts/Noteworthy.ttc (1 level up from styles/) */
+  src: url("../fonts/Noteworthy.ttc") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* =========================
+   2) Fallback Google font (Mountains of Christmas)
+========================= */
+@import url("https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap");
+
+/* =========================
+   3) Root Colors
+========================= */
 :root {
-    --siena-green: #006b54; /* Primary */
-    --siena-gold: #fcc917; /* Secondary */
-    --siena-white: #ffffff;
+  --siena-green: #006b54; /* Primary */
+  --siena-gold: #fcc917;  /* Secondary */
+  --siena-white: #ffffff;
+}
+
+/* =========================
+   4) Global Reset & Defaults
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--siena-green); /* Green background */
+  color: var(--siena-gold);            /* Gold text */
+  overflow-x: hidden;                  /* Prevent horizontal scroll from snowflakes */
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Use this class wherever you want Noteworthy first, with a fallback. */
+.noteworthy {
+  font-family: "Noteworthy", "Mountains of Christmas", cursive;
+}
+
+/* =========================
+   Header
+========================= */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background-color: var(--siena-gold); /* GOLD header */
+  color: var(--siena-green);          /* GREEN text in header */
+}
+
+header img.swishmas-logo {
+  max-height: 80px;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+}
+
+/* =========================
+   Main
+========================= */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  z-index: 1; /* Above snowflakes */
+  position: relative;
+}
+
+/* Album Section */
+.album-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.album-cover {
+  max-width: 300px;
+  width: 100%;
+  border: 4px solid var(--siena-white);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.album-cover:hover {
+  transform: scale(1.05);
+}
+
+/* Modal for full-screen album cover */
+.modal {
+  display: none;            /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;           /* show the modal */
+}
+
+.modal-content {
+  position: relative;
+  text-align: center;
+}
+
+.modal-cover {
+  max-width: 90vw;
+  max-height: 80vh;
+  border: 6px solid var(--siena-white);
+  border-radius: 10px;
+}
+
+.close-modal {
+  margin-top: 1rem;
+  background-color: var(--siena-gold);
+  color: var(--siena-green);
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-modal:hover {
+  opacity: 0.8;
+}
+
+/* =========================
+   Audio Playlist
+========================= */
+.audio-playlist {
+  margin-bottom: 2rem;
+}
+
+.audio-playlist h2 {
+  font-size: 2rem;
+  color: var(--siena-white);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.playlist-container {
+  background-color: var(--siena-gold);
+  color: var(--siena-green);
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#trackList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+#trackList li {
+  background-color: var(--siena-green);
+  color: var(--siena-white);
+  margin: 0.25rem 0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#trackList li:hover {
+  background-color: #004230; /* Darker green on hover */
+}
+
+#nowPlaying {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+audio {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+/* =========================
+   Promo Video
+========================= */
+.promo-video {
+  margin-bottom: 2rem;
+}
+
+.promo-video h2 {
+  font-size: 2rem;
+  color: var(--siena-white);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.infomercial-tagline {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--siena-white);
+  margin-bottom: 1rem;
+  text-align: center;
+  max-width: 700px;
+  margin: 0.25rem auto 1rem auto;
+}
+
+.video-responsive {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+}
+
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* =========================
+   Credits Section
+========================= */
+.credits-section {
+  background-color: var(--siena-gold);
+  color: var(--siena-green);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.credits-section h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+/* Force two rows: first row for 3 singers, second row for Alex + Michael */
+.credits-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.credit-card {
+  background-color: var(--siena-white);
+  color: var(--siena-green);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  width: 150px;
+}
+
+.headshot {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.credit-name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.credit-role {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   Team Photo
+========================= */
+.team-photo-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.team-photo-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 4px solid var(--siena-white);
+}
+
+/* =========================
+   Footer
+========================= */
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: var(--siena-white);
+  background-color: var(--siena-green);
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+footer a {
+  color: var(--siena-white);
+  text-decoration: underline;
+}
+
+/* =========================
+   Snowfall
+========================= */
+@keyframes snow {
+  0% {
+    transform: translateY(-2em);
+    opacity: 1;
   }
-  
-  /* Global styles */
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--siena-white);
-    color: var(--siena-green);
+  100% {
+    transform: translateY(110vh);
+    opacity: 0.1;
   }
-  
-  /* Header */
-  header {
-    background-color: var(--siena-green);
-    color: var(--siena-white);
-    text-align: center;
-    padding: 1.5rem 1rem;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 2rem;
-  }
-  
-  header p {
-    margin: 0.5rem 0 0;
-    font-size: 1.2rem;
-  }
-  
-  /* Main Layout */
-  main {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  /* Audio Playlist Styles */
-  .audio-playlist h2 {
-    color: var(--siena-green);
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .audio-playlist ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .audio-playlist li {
-    margin-bottom: 1rem;
-    background: var(--siena-gold);
-    padding: 0.5rem;
-    border-radius: 5px;
-  }
-  
-  .audio-playlist p {
-    margin: 0.2rem 0 0;
-    font-weight: bold;
-  }
-  
-  /* Promo Video Section */
-  .promo-video {
-    margin-top: 2rem;
-  }
-  
-  .promo-video h2 {
-    color: var(--siena-green);
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  video {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
-  }
-  
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    background-color: var(--siena-green);
-    color: var(--siena-white);
-  }
-  
-  footer a {
-    color: var(--siena-white);
-    text-decoration: underline;
-  }
+}
+
+.snowflake {
+  position: fixed;
+  left: 50%;
+  color: var(--siena-white);
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+  animation-name: snow;
+  animation-timing-function: linear;
+  animation-iteration-count: 1; 
+}

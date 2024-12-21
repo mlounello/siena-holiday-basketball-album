@@ -3,12 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Siena Men's Basketball Holiday Album</title>
+  <title>Larry’s Hoops and Harmonies: A Merry Swishmas</title>
 
-  <!-- IN-PAGE CSS -->
+  <!-- Attempt to load "Noteworthy" from your local .ttc file, then fallback to cursive -->
+  <style>
+    @font-face {
+      font-family: 'Noteworthy';
+      /* Adjust this path if you put Noteworthy.ttc elsewhere.
+         Example: 'assets/fonts/Noteworthy.ttc' */
+      src: url("assets/fonts/Noteworthy.ttc") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+
+  <!-- Google Font fallback (Mountains of Christmas) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" 
+    rel="stylesheet"
+  />
+
   <style>
     /* =========================
-       Siena Palette
+       Siena Colors
     ========================= */
     :root {
       --siena-green: #006b54; /* Primary */
@@ -17,125 +36,201 @@
     }
 
     /* =========================
-       Global Styles
+       Global Resets & Defaults
     ========================= */
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: var(--siena-white);
-      color: var(--siena-green);
+      padding: 0;
     }
 
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--siena-green); /* Green background */
+      color: var(--siena-gold);            /* Gold text */
+      overflow-x: hidden;                  /* Prevent horizontal scroll from snowflakes */
+      position: relative;
+      min-height: 100vh;                   
+    }
+
+    /* ========== 
+       .noteworthy Class 
+       For headings using Noteworthy first, 
+       then fallback 
+    ========== */
+    .noteworthy {
+      font-family: 'Noteworthy', 'Mountains of Christmas', cursive; 
+    }
+
+    /* =========================
+       Header
+    ========================= */
     header {
-      background-color: var(--siena-green);
-      color: var(--siena-white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
       padding: 1.5rem 1rem;
+      background-color: var(--siena-gold); /* GOLD header */
+      color: var(--siena-green);           /* GREEN text in header */
     }
-
+    header img.swishmas-logo {
+      max-height: 80px;
+      margin-bottom: 1rem;
+    }
     header h1 {
       margin: 0;
       font-size: 2rem;
+      /* Use .noteworthy for your main title */
     }
-
     header p {
       margin: 0.5rem 0 0;
       font-size: 1.2rem;
     }
 
+    /* =========================
+       Main Content
+    ========================= */
     main {
-      padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
+      padding: 2rem;
+      z-index: 1; /* Above snowflakes */
+      position: relative;
     }
 
-    /* =========================
-       Album Cover
-    ========================= */
+    /* ALBUM SECTION */
     .album-section {
       text-align: center;
       margin-bottom: 2rem;
+      position: relative;
     }
-
     .album-cover {
       max-width: 300px;
       width: 100%;
-      border: 4px solid var(--siena-green);
+      border: 4px solid var(--siena-white);
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+    .album-cover:hover {
+      transform: scale(1.05);
+    }
+
+    /* MODAL for Full-Screen Album Cover */
+    .modal {
+      display: none;            /* hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;           /* show the modal */
+    }
+    .modal-content {
+      position: relative;
+      text-align: center;
+    }
+    .modal-cover {
+      max-width: 90vw;
+      max-height: 80vh;
+      border: 6px solid var(--siena-white);
       border-radius: 10px;
     }
-
-    /* =========================
-       Audio Playlist - Single Player
-    ========================= */
-    .audio-playlist {
-      margin-bottom: 2rem;
-    }
-
-    .audio-playlist h2 {
-      font-size: 1.8rem;
-      color: var(--siena-green);
-      margin-bottom: 1rem;
-    }
-
-    .audio-player {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .close-modal {
+      margin-top: 1rem;
       background-color: var(--siena-gold);
-      padding: 1rem;
-      border-radius: 10px;
-    }
-
-    .audio-player audio {
-      width: 100%;
-      max-width: 600px;
-      margin-bottom: 0.5rem;
-    }
-
-    .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .player-controls button {
-      background-color: var(--siena-green);
-      color: var(--siena-white);
+      color: var(--siena-green);
+      font-weight: bold;
       border: none;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      font-weight: bold;
       border-radius: 5px;
     }
-
-    .player-controls button:hover {
+    .close-modal:hover {
       opacity: 0.8;
     }
 
-    #currentTrackTitle {
-      font-weight: bold;
+    /* AUDIO PLAYLIST */
+    .audio-playlist {
+      margin-bottom: 2rem;
+    }
+    .audio-playlist h2 {
+      font-size: 2rem;
+      color: var(--siena-white);
+      text-align: center;
+      margin-bottom: 1rem;
+      /* Apply Noteworthy here */
+    }
+    .playlist-container {
+      background-color: var(--siena-gold);
       color: var(--siena-green);
+      padding: 1rem;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #trackList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+    #trackList li {
+      background-color: var(--siena-green);
+      color: var(--siena-white);
+      margin: 0.25rem 0;
+      padding: 0.5rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    #trackList li:hover {
+      background-color: #004230; /* Darker green on hover */
+    }
+    #nowPlaying {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    audio {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 1rem;
     }
 
-    /* =========================
-       Promo Video (Responsive Embed)
-    ========================= */
+    /* PROMO VIDEO */
     .promo-video {
       margin-bottom: 2rem;
     }
-
     .promo-video h2 {
-      color: var(--siena-green);
-      font-size: 1.8rem;
+      font-size: 2rem;
+      color: var(--siena-white);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .infomercial-tagline {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--siena-white);
       margin-bottom: 1rem;
       text-align: center;
+      max-width: 700px;
+      margin: 0.25rem auto 1rem auto;
     }
-
-    /* Optional: Make the iframe responsive */
     .video-responsive {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%;
       height: 0;
     }
     .video-responsive iframe {
@@ -147,59 +242,159 @@
       border: 0;
     }
 
-    /* =========================
-       Footer
-    ========================= */
+    /* CREDITS SECTION with HEADSHOTS */
+    .credits-section {
+      background-color: var(--siena-gold);
+      color: var(--siena-green);
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+    .credits-section h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-top: 0;
+      /* Apply Noteworthy here */
+    }
+    /* Force two rows: first row for the 3 singers, second row for Alex + Michael */
+    .credits-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .credit-card {
+      background-color: var(--siena-white);
+      color: var(--siena-green);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      width: 150px;
+    }
+    .headshot {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 0.5rem;
+    }
+    .credit-name {
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+    .credit-role {
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    /* TEAM PHOTO SECTION */
+    .team-photo-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .team-photo-section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 4px solid var(--siena-white);
+    }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: var(--siena-green);
       color: var(--siena-white);
+      background-color: var(--siena-green);
+      position: relative;
+      z-index: 1;
     }
-
+    footer p {
+      margin: 0.5rem 0;
+    }
     footer a {
       color: var(--siena-white);
       text-decoration: underline;
+    }
+
+    /* SNOWFALL */
+    @keyframes snow {
+      0% {
+        transform: translateY(-2em);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0.1;
+      }
+    }
+    .snowflake {
+      position: fixed;
+      left: 50%;
+      color: var(--siena-white);
+      z-index: 9999;
+      user-select: none;
+      pointer-events: none;
+      animation-name: snow;
+      animation-timing-function: linear;
+      animation-iteration-count: 1; 
     }
   </style>
 </head>
 
 <body>
-  <!-- ========== HEADER ========== -->
+
+  <!-- HEADER with Logo -->
   <header>
-    <h1>Siena Men's Basketball Presents: A Holiday Mix!</h1>
-    <p>A festive album straight from the court to your home.</p>
+    <!-- Replace 'logo.png' with your actual file name -->
+    <img src="assets/images/logo.png" alt="Swishmas Logo" class="swishmas-logo" />
+    <h1 class="noteworthy">Larry’s Hoops and Harmonies: A Merry Swishmas</h1>
+    <p>Where Holiday Cheer Meets Slam Dunk Spirit!</p>
   </header>
 
-  <!-- ========== MAIN CONTENT ========== -->
+  <!-- MODAL for full-screen album cover -->
+  <div id="coverModal" class="modal">
+    <div class="modal-content">
+      <img 
+        src="assets/images/album-cover.png"
+        alt="Album Cover Fullscreen"
+        class="modal-cover"
+        id="modalCoverImage"
+      />
+      <button class="close-modal" id="closeModalBtn">Close</button>
+    </div>
+  </div>
+
   <main>
-    <!-- ALBUM COVER SECTION -->
+    <!-- ALBUM SECTION -->
     <section class="album-section">
-      <!-- Place your album cover .png or .jpg in assets/images/ -->
-      <img src="assets/images/album-cover.png" alt="Album Cover" class="album-cover" />
+      <img 
+        src="assets/images/album-cover.png" 
+        alt="Album Cover" 
+        class="album-cover" 
+        id="albumCover"
+      />
     </section>
 
-    <!-- AUDIO PLAYER with SINGLE ELEMENT -->
+    <!-- AUDIO PLAYLIST -->
     <section class="audio-playlist">
-      <h2>Listen to Our Holiday Tracks</h2>
-      <div class="audio-player">
-        <!-- Audio element -->
+      <h2 class="noteworthy">Listen to Our Holiday Tracks</h2>
+      <div class="playlist-container">
+        <div id="nowPlaying"></div>
+        <ul id="trackList"></ul>
         <audio id="audioPlayer" controls preload="metadata">
           Your browser does not support the audio element.
         </audio>
-
-        <!-- Controls -->
-        <div class="player-controls">
-          <button id="prevTrack">Prev</button>
-          <span id="currentTrackTitle"></span>
-          <button id="nextTrack">Next</button>
-        </div>
       </div>
     </section>
 
-    <!-- PROMO VIDEO (YOUTUBE EMBED) -->
+    <!-- PROMO VIDEO -->
     <section class="promo-video">
-      <h2>As Seen on TV (Old-School Style!)</h2>
+      <h2 class="noteworthy">As Seen on TV (Old-School Infomercial Style!)</h2>
+      <p class="infomercial-tagline">
+        Relive the golden age of TV promos with Larry’s hilarious holiday hits, 
+        brought to you in true infomercial fashion—cheesy, charming, and completely unforgettable!
+      </p>
       <div class="video-responsive">
         <iframe 
           src="https://www.youtube.com/embed/vFWu8yr1Ipo"
@@ -209,82 +404,174 @@
           allowfullscreen>
         </iframe>
       </div>
-      <p style="text-align:center;">
-        Check out this classic infomercial throwback!
-      </p>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="credits-section">
+      <h2 class="noteworthy">Credits</h2>
+
+      <!-- Row 1: The 3 Singers -->
+      <div class="credits-row">
+        <div class="credit-card">
+          <img 
+            src="assets/images/larry-headshot.jpg" 
+            alt="Chris 'Larry' Olsen Headshot" 
+            class="headshot"
+          />
+          <p class="credit-name">Chris "Larry" Olsen</p>
+          <p class="credit-role">Singer</p>
+        </div>
+
+        <div class="credit-card">
+          <img 
+            src="assets/images/luke-headshot.jpg" 
+            alt="Luke Cecchi Headshot" 
+            class="headshot"
+          />
+          <p class="credit-name">Luke Cecchi</p>
+          <p class="credit-role">Singer</p>
+        </div>
+
+        <div class="credit-card">
+          <img 
+            src="assets/images/brendan-headshot.jpg" 
+            alt="Brendan Coyle Headshot" 
+            class="headshot"
+          />
+          <p class="credit-name">Brendan Coyle</p>
+          <p class="credit-role">Singer</p>
+        </div>
+      </div>
+
+      <!-- Row 2: Alex & Michael -->
+      <div class="credits-row">
+        <div class="credit-card">
+          <img 
+            src="assets/images/alex-headshot.jpg" 
+            alt="Alex Peters Headshot" 
+            class="headshot"
+          />
+          <p class="credit-name">Alex Peters</p>
+          <p class="credit-role">Manager</p>
+        </div>
+
+        <div class="credit-card">
+          <img 
+            src="assets/images/mike-headshot.jpg" 
+            alt="Michael Lounello Headshot" 
+            class="headshot"
+          />
+          <p class="credit-name">Michael Lounello '11</p>
+          <p class="credit-role">Producer</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM PHOTO at BOTTOM -->
+    <section class="team-photo-section">
+      <h2 class="noteworthy" style="color: var(--siena-white); text-align: center; margin-bottom: 1rem;">
+        Merry Christmas from Siena Men's Basketball
+      </h2>
+      <!-- Replace "team-photo.jpg" with your actual team photo filename -->
+      <img src="assets/images/team-photo.jpg" alt="Team Photo" />
     </section>
   </main>
 
-  <!-- ========== FOOTER ========== -->
+  <!-- FOOTER -->
   <footer>
     <p>
-      &copy; <span id="year"></span> Siena Men’s Basketball |
-      <a href="https://siena.edu" target="_blank" rel="noopener noreferrer">Siena College</a>
+      &copy; 2024 Siena Basketball | 
+      <a 
+        href="https://sienasaints.com/sports/mens-basketball" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        Siena Saints
+      </a>
     </p>
   </footer>
 
-  <!-- ========== IN-PAGE SCRIPT ========== -->
+  <!-- ========== SCRIPT ========== -->
   <script>
-    // ====================
-    // Current Year in Footer
-    // ====================
-    document.getElementById('year').textContent = new Date().getFullYear();
-
     // ====================
     // Audio Playlist
     // ====================
-    // 1. Define your playlist
     const playlist = [
-      {
-        title: "All I Want for Christmas",
-        src: "assets/audio/track1.mp3"
-      },
-      {
-        title: "Last Christmas",
-        src: "assets/audio/track2.mp3"
-      },
-      {
-        title: "Baby It's Cold Outside",
-        src: "assets/audio/track3.mp3"
-      },
-      {
-        title: "White Christmas",
-        src: "assets/audio/track4.mp3"
-      },
-      {
-        title: "12 Days of G-Mac Christmas",
-        src: "assets/audio/track5.mp3"
-      }
+      { title: "All I Want for Christmas",     src: "assets/audio/track1.mp3" },
+      { title: "Last Christmas",               src: "assets/audio/track2.mp3" },
+      { title: "Baby It's Cold Outside",       src: "assets/audio/track3.mp3" },
+      { title: "White Christmas",              src: "assets/audio/track4.mp3" },
+      { title: "12 Days of G-Mac Christmas",   src: "assets/audio/track5.mp3" }
     ];
 
-    // 2. Grab references to DOM elements
+    const trackList   = document.getElementById('trackList');
     const audioPlayer = document.getElementById('audioPlayer');
-    const currentTrackTitle = document.getElementById('currentTrackTitle');
-    const prevTrackBtn = document.getElementById('prevTrack');
-    const nextTrackBtn = document.getElementById('nextTrack');
+    const nowPlaying  = document.getElementById('nowPlaying');
 
-    // 3. Track index
-    let currentTrackIndex = 0;
+    // Populate the clickable list
+    playlist.forEach((track, index) => {
+      const li = document.createElement('li');
+      li.textContent = track.title;
+      li.addEventListener('click', () => loadTrack(index));
+      trackList.appendChild(li);
+    });
 
-    // 4. Load initial track
     function loadTrack(index) {
       audioPlayer.src = playlist[index].src;
-      currentTrackTitle.textContent = playlist[index].title;
+      nowPlaying.textContent = "Now Playing: " + playlist[index].title;
       audioPlayer.play();
     }
 
-    loadTrack(currentTrackIndex);
+    // ====================
+    // Fullscreen Album Cover Modal
+    // ====================
+    const albumCover   = document.getElementById('albumCover');
+    const coverModal   = document.getElementById('coverModal');
+    const closeModalBtn= document.getElementById('closeModalBtn');
 
-    // 5. Next/Prev controls
-    prevTrackBtn.addEventListener('click', () => {
-      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-      loadTrack(currentTrackIndex);
+    albumCover.addEventListener('click', () => {
+      // Show modal
+      coverModal.classList.add('active');
+    });
+    closeModalBtn.addEventListener('click', () => {
+      // Hide modal
+      coverModal.classList.remove('active');
+    });
+    // Close modal if user clicks outside the image
+    coverModal.addEventListener('click', (e) => {
+      if (e.target === coverModal) {
+        coverModal.classList.remove('active');
+      }
     });
 
-    nextTrackBtn.addEventListener('click', () => {
-      currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-      loadTrack(currentTrackIndex);
-    });
+    // ====================
+    // Continuous Snowfall
+    // ====================
+    setInterval(createSnowflake, 300);  // Every 300ms => 1 new flake
+
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄';
+
+      // Random horizontal start
+      snowflake.style.left  = Math.random() * 100 + '%';
+
+      // Larger random size range
+      const size = 20 + Math.random() * 20; // 20px to 40px
+      snowflake.style.fontSize = size + 'px';
+
+      // Random fall duration
+      const fallDuration = 8 + Math.random() * 5; // 8s to 13s
+      snowflake.style.animationDuration = fallDuration + 's';
+
+      document.body.appendChild(snowflake);
+
+      // Remove after animation
+      snowflake.addEventListener('animationend', () => {
+        snowflake.remove();
+      });
+    }
   </script>
 </body>
 </html>
